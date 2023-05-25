@@ -19,7 +19,7 @@ const Footer = () => {
             </div>
             <div className="footer footer-center p-4 bg-base-300 text-base-content">
                 <div>
-                    <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
+                    <p>Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>
                 </div>
             </div>
         </footer>
