@@ -10,14 +10,6 @@ const OurMenu = () => {
                 <title>Bestro Boss || Menu</title>
             </Helmet>
             <Cover img={menuImg} title='our Menu'></Cover>
-            <Menu></Menu>
-            <Cover img={menuImg} title='our Menu'></Cover>
-            <Menu></Menu>
-            <Cover img={menuImg} title='our Menu'></Cover>
-            <Menu></Menu>
-            <Cover img={menuImg} title='our Menu'></Cover>
-            <Menu></Menu>
-            <Cover img={menuImg} title='our Menu'></Cover>
             
         </div>
     );
