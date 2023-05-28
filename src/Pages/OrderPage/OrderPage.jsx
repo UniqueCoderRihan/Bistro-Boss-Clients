@@ -6,8 +6,12 @@ import 'react-tabs/style/react-tabs.css';
 import UseMenu from '../../hooks/UseMenu';
 import FoodCart from '../../Components/FoodCart/FoodCart';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const OrderPage = () => {
+    <Helmet>
+        <title>Order Page || Bestro Boss</title>
+    </Helmet>
     const { category } =useParams();
     const categories = ['Pizza','Soup','dessert','drinks','Salads'];
     const initalIndex = categories.indexOf(category)
