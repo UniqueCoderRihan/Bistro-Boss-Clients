@@ -1,32 +1,32 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 
 const Login = () => {
-
+    const Ref = useRef(null)
+    const [diasble,setDiasble] = useState(true)
     const handleLogin = event => {
         event.preventDefault();
-        setError(null)
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
-
-        singInUser(email, password)
-            .then(result => {
-                setUser(result.user)
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Login Successfully done',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-            .catch(error => setError(error.message))
-
-
     }
 
+    const handleVaildate=()=>{
+        const userCaptchaValue = Ref.current.value;
+        console.log(userCaptchaValue);
+        if(validateCaptcha(userCaptchaValue)){
+            setDiasble(false)
+        }
+        else{
+            setDiasble(true)
+        }
+    }
+
+    useEffect(()=>{
+        loadCaptchaEnginge(6); 
+    },[])
     return (
         <div className="hero min-h-screen bg-pink-200 rounded-lg">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -55,7 +55,14 @@ const Login = () => {
                                     </div>
                                 </label>
                             </div>
-                            <input type="submit" value="login" className='btn btn-primary w-full' />
+                            <div className="form-control">
+                                <label className="label">
+                                <LoadCanvasTemplate />
+                                </label>
+                                <input ref={Ref} type="captcha" name='captcha' required placeholder="Type Captcha" className="input input-bordered mb-5" />
+                                <button onClick={handleVaildate} className='btn btn-outline btn-xs mb-2'>Validate</button>
+                            </div>
+                            <input disabled={diasble} type="submit" value="login" className='btn btn-primary w-full' />
                         </form>
 
                         <p className='text-center'>Or</p>
