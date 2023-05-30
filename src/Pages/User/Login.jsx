@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { AuthContex } from '../../Providers/AuthProvider';
 
 const Login = () => {
+    const {LoginUser} = useContext(AuthContex);
     const Ref = useRef(null)
     const [diasble,setDiasble] = useState(true)
     const handleLogin = event => {
@@ -11,6 +13,10 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        Login(email,password)
+        .then(result=>{
+            console.log(result.user);
+        })
     }
 
     const handleVaildate=()=>{
@@ -50,7 +56,7 @@ const Login = () => {
                                 <input type="password" name='password' required placeholder="password" className="input input-bordered" />
                                 <label className="label">
                                     <div className="flex">
-                                        <p className="label-text-alt link link-hover">Are you new to? <span><Link to='/Register'>Register</Link></span> </p>
+                                        <p className="label-text-alt link link-hover">Are you new to? <span><Link to='/singUp'>Register</Link></span> </p>
                                         <p className="label-text-alt link link-hover ml-12">Forget Password?</p>
                                     </div>
                                 </label>
