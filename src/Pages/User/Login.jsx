@@ -4,42 +4,42 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, val
 import { AuthContex } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2'
 const Login = () => {
-    const {LoginUser} = useContext(AuthContex);
+    const { LoginUser } = useContext(AuthContex);
     const Ref = useRef(null)
-    const [diasble,setDiasble] = useState(true)
+    const [diasble, setDiasble] = useState(true)
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
-        LoginUser(email,password)
-        .then(result=>{
-            console.log(result.user);
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        })
+        LoginUser(email, password)
+            .then(result => {
+                console.log(result.user);
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Login Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
     }
 
-    const handleVaildate=()=>{
-        const userCaptchaValue = Ref.current.value;
+    const handleVaildate = (e) => {
+        const userCaptchaValue = e.target.value;
         console.log(userCaptchaValue);
-        if(validateCaptcha(userCaptchaValue)){
+        if (validateCaptcha(userCaptchaValue)) {
             setDiasble(false)
         }
-        else{
+        else {
             setDiasble(true)
         }
     }
 
-    useEffect(()=>{
-        loadCaptchaEnginge(6); 
-    },[])
+    useEffect(() => {
+        loadCaptchaEnginge(6);
+    }, [])
     return (
         <div className="hero min-h-screen bg-pink-200 rounded-lg">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -70,10 +70,10 @@ const Login = () => {
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                <LoadCanvasTemplate />
+                                    <LoadCanvasTemplate />
                                 </label>
-                                <input ref={Ref} type="captcha" name='captcha' required placeholder="Type Captcha" className="input input-bordered mb-5" />
-                                <button onClick={handleVaildate} className='btn btn-outline btn-xs mb-2'>Validate</button>
+                                <input onBlur={handleVaildate} type="captcha" name='captcha' required placeholder="Type Captcha" className="input input-bordered mb-5" />
+                                
                             </div>
                             <input disabled={diasble} type="submit" value="login" className='btn btn-primary w-full' />
                         </form>
