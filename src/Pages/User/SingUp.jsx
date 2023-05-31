@@ -1,21 +1,35 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../Providers/AuthProvider';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2'
 
 const SingUp = () => {
-    const {createUser} = useContext(AuthContex);
+    const navigate = useNavigate();
+    const { createUser, userProfileUpdate } = useContext(AuthContex);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         console.log(data)
-        createUser(data.email,data.password)
-        .then(result=>{
-            console.log(result.user);
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+        createUser(data.email, data.password)
+            .then(result => {
+                console.log(result.user);
+                userProfileUpdate(data.name, data.photoURL)
+                .then(()=>{
+                    console.log('User Updated ')
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'SingUp Successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    navigate('/')
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     };
 
     return (
@@ -31,20 +45,31 @@ const SingUp = () => {
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-pink-100">
                     <div className='card-body'>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            {/* Name */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" {...register("name",{ required: true })} name='name' placeholder="Name" className="input input-bordered" />
+                                <input type="text" {...register("name", { required: true })} name='name' placeholder="Name" className="input input-bordered" />
                                 {errors.name && <span className='text-red-600'>Name is required</span>}
                             </div>
+                            {/* Photo URL SECTION */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input type="text" {...register("photoURL", { required: true })} placeholder="Photo URl" className="input input-bordered" />
+                                {errors.photoURL && <span className='text-red-600'>Profile Image is required</span>}
+                            </div>
+                            {/* Email Section */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" {...register("email",{required:true})} name='email' placeholder="email" className="input input-bordered" />
+                                <input type="email" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
                                 {errors.email && <span className='text-red-600'>Email is required</span>}
                             </div>
+                            {/* Password Section */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
@@ -53,7 +78,7 @@ const SingUp = () => {
                                     required: true,
                                     minLength: 6,
                                     maxLength: 20,
-                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                                    pattern: /(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])/
                                 })} placeholder="password" className="input input-bordered" />
                                 {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
                                 {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
