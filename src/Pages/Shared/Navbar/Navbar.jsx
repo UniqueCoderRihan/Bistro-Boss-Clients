@@ -12,6 +12,7 @@ const Navbar = () => {
     const NavOptions = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/menu'>Menu</Link></li>
+        <li><Link to='/secret'>Secret</Link></li>
         <li><Link to='/order/salad'>Order</Link></li>
         {
         user && <><li><button onClick={handleLogout} className='btn btn-ghost'>Logout</button></li></> || <li><Link to='/login'>Login</Link></li>}

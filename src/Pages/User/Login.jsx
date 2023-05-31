@@ -1,12 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContex } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2'
 const Login = () => {
     const { LoginUser } = useContext(AuthContex);
-    const Ref = useRef(null)
     const [diasble, setDiasble] = useState(true)
+    // Step for Redirect after Login! That's Very Important topic.
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
@@ -23,6 +26,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 })
+                navigate(from,{replace:true})
             })
     }
 
