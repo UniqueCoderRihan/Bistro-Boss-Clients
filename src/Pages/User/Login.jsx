@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContex } from '../../Providers/AuthProvider';
-
+import Swal from 'sweetalert2'
 const Login = () => {
     const {LoginUser} = useContext(AuthContex);
     const Ref = useRef(null)
@@ -13,9 +13,16 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
-        Login(email,password)
+        LoginUser(email,password)
         .then(result=>{
             console.log(result.user);
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+              })
         })
     }
 
