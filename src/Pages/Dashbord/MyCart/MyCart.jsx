@@ -4,9 +4,10 @@ import Cart from './Cart';
 
 const MyCart = () => {
     const [cart] = UseCart();
+    
     const totalPrice = cart.reduce((sum, item) => item.price + sum, 0).toFixed(2)
     return (
-        <div>
+        <div className='w-full'>
 
             <div className='uppercase flex space-x-9 font-semibold'>
                 <h2 className='text-3xl'>Total Items: {cart.length}</h2>
