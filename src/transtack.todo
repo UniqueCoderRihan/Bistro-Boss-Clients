@@ -1,0 +1,9 @@
+STEP___01:
+ * You Need To Install TranstackQuery Npm
+ *Then You Need to create Client on the root . main.jsx
+ *you need to add provider,example you can follow documention
+ *also you need to import some information.
+
+STEP___02:
+ * OnThis Specfic route or Hooks, You can use anywhere but i write on the custom hook file.
+ * 
