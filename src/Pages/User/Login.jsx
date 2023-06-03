@@ -44,6 +44,7 @@ const Login = () => {
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
+    /*TODO: For Development Purpose Captha Stoped !! */ 
     return (
         <div className="hero min-h-screen bg-pink-200 rounded-lg">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -79,7 +80,7 @@ const Login = () => {
                                 <input onBlur={handleVaildate} type="captcha" name='captcha' required placeholder="Type Captcha" className="input input-bordered mb-5" />
                                 
                             </div>
-                            <input disabled={diasble} type="submit" value="login" className='btn btn-primary w-full' />
+                            <input disabled={false} type="submit" value="login" className='btn btn-primary w-full' />
                         </form>
 
                         <p className='text-center'>Or</p>
