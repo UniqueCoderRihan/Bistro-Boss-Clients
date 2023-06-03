@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
+import { FaCartPlus } from "react-icons/fa";
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContex } from '../../../Providers/AuthProvider';
 
 const Navbar = () => {
-    const {user,logout} = useContext(AuthContex);
+    const { user, logout } = useContext(AuthContex);
     const location = useLocation();
     const isLogin = location.pathname.includes('login');
-    const handleLogout=()=>{
+    const handleLogout = () => {
         logout()
     }
     const NavOptions = <>
@@ -14,8 +15,17 @@ const Navbar = () => {
         <li><Link to='/menu'>Menu</Link></li>
         <li><Link to='/secret'>Secret</Link></li>
         <li><Link to='/order/salad'>Order</Link></li>
+        <li>
+            <Link to='/'>
+                <button className="btn">
+                    <FaCartPlus className=' mr-2'></FaCartPlus>
+                    <div className="badge badge-secondary">+1</div>
+                </button>
+            </Link>
+        </li>
+
         {
-        user && <><li><button onClick={handleLogout} className='btn btn-ghost'>Logout</button></li></> || <li><Link to='/login'>Login</Link></li>}
+            user && <><li><button onClick={handleLogout} className='btn btn-ghost'>Logout</button></li></> || <li><Link to='/login'>Login</Link></li>}
     </>
 
     return (
