@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import {FaRecycle, FaRegTrashAlt, FaUsers} from 'react-icons/fa'
+import { FaRecycle, FaRegTrashAlt, FaUserShield, FaUsers } from 'react-icons/fa'
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
 
@@ -7,6 +8,31 @@ const AllUsers = () => {
         const res = await fetch('http://localhost:5000/users')
         return res.json();
     })
+
+    const handleMakeAdmin = user => {
+        console.log('clicked');
+        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+            method: 'PATCH',
+        })
+        // hey Dev! Please note. Don't Forget to give , OtherWays You may felt error.
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                refetch();
+                if (data.modifiedCount) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Login Successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    }
+    const handleRemove = id => {
+
+    }
 
     return (
         <div>
@@ -26,13 +52,18 @@ const AllUsers = () => {
                         </thead>
                         <tbody>
                             {
-                                users.map((user,index) =>
+                                users.map((user, index) =>
                                     <tr key={user._id}>
-                                        <th>{index+1}</th>
+                                        <th>{index + 1}</th>
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
-                                        <td> <button className="text-2xl bg-[#D1A054] btn"> <FaUsers></FaUsers> </button> </td>
-                                        <td> <button className="bg-red-800 text-white btn text-2xl"><FaRegTrashAlt></FaRegTrashAlt> </button> </td>
+                                        <td> <button onClick={() => handleMakeAdmin(user)} className="text-2xl bg-[#D1A054] btn">
+                                            {
+                                                user.role === 'admin' ? 'admin' :
+                                                    <FaUserShield></FaUserShield>
+                                            }
+                                        </button> </td>
+                                        <td> <button onClick={() => handleRemove(user._id)} className="bg-red-800 text-white btn text-2xl"><FaRegTrashAlt></FaRegTrashAlt> </button> </td>
                                     </tr>
                                 )
                             }
