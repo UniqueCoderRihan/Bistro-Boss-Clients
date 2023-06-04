@@ -3,6 +3,7 @@ import { FaGoogle } from 'react-icons/fa';
 import { AuthContex } from '../../Providers/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
 const SocialLogin = () => {
     const navigate = useNavigate();
     const location = useLocation();
