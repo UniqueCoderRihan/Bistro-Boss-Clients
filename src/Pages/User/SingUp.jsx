@@ -15,17 +15,29 @@ const SingUp = () => {
             .then(result => {
                 console.log(result.user);
                 userProfileUpdate(data.name, data.photoURL)
-                .then(()=>{
-                    console.log('User Updated ')
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'SingUp Successfully',
-                        showConfirmButton: false,
-                        timer: 1500
+                    .then(() => {
+                        const user = {name:data.name,email:data.email,password:data.password}
+                        fetch('http://localhost:5000/users',{
+                            method:'post',
+                            headers:{
+                                'content-type':'application/json'
+                            },
+                            body:JSON.stringify(user)   
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'SingUp Successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    navigate('/')
+                                }
+                            })
                     })
-                    navigate('/')
-                })
             })
             .catch(error => {
                 console.log(error);

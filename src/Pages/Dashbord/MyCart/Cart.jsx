@@ -58,7 +58,7 @@ const Cart = ({ row }) => {
             </td>
             <td>${price}</td>
             <td>
-                <button onClick={() => handleRemove(_id)} className="btn btn-ghost btn-xs text-2xl"><FaRegTrashAlt></FaRegTrashAlt> </button>
+                <button onClick={() => handleRemove(_id)} className="btn btn-ghost text-4xl pb-5 bg-red-600"><FaRegTrashAlt></FaRegTrashAlt> </button>
             </td>
         </tr>
     );
