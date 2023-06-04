@@ -2,11 +2,13 @@ import React from 'react';
 import { FaArrowRight, FaBook, FaCalendarAlt, FaHome, FaShoppingCart, FaUncharted, FaUser, FaUsers, FaWallet } from 'react-icons/fa';
 import { NavLink, Outlet } from 'react-router-dom';
 import UseCart from '../hooks/UseCart';
+import UseAdmin from '../hooks/UseAdmin';
 
 const Dashbord = () => {
     const [cart] = UseCart();
     // TODO: Data load from Server Site about Admin role
-    const isAdmin = true;
+    // const isAdmin = true;
+    const [isAdmin] = UseAdmin();
     return (
         <div className="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
