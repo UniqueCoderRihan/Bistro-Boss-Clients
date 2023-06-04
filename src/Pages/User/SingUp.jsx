@@ -4,6 +4,7 @@ import { AuthContex } from '../../Providers/AuthProvider';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
+import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 
 const SingUp = () => {
     const navigate = useNavigate();
@@ -106,11 +107,7 @@ const SingUp = () => {
 
                             <input type="submit" value="SingUp" className='btn btn-primary w-full' />
                         </form>
-
-                        <p className='text-center'>Or</p>
-                        <div>
-                            <button className='btn btn-primary btn-outline w-full'>  Continue With Google</button>
-                        </div>
+                            <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContex } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2'
+import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 const Login = () => {
     const { LoginUser } = useContext(AuthContex);
     const [diasble, setDiasble] = useState(true)
@@ -80,13 +81,9 @@ const Login = () => {
                                 <input onBlur={handleVaildate} type="captcha" name='captcha' required placeholder="Type Captcha" className="input input-bordered mb-5" />
                                 
                             </div>
-                            <input disabled={false} type="submit" value="login" className='btn btn-primary w-full' />
+                            <input disabled={diasble} type="submit" value="login" className='btn btn-primary w-full' />
                         </form>
-
-                        <p className='text-center'>Or</p>
-                        <div>
-                            <button className='btn btn-primary btn-outline w-full'>  Continue With Google</button>
-                        </div>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>
