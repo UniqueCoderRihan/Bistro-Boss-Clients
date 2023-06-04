@@ -7,23 +7,35 @@ const SocialLogin = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
-    const {googleSign} = useContext(AuthContex);
-    const handleGoogle=()=>{
+    const { googleSign } = useContext(AuthContex);
+    const handleGoogle = () => {
         googleSign()
-        .then(result=>{
-            console.log(result.user);
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Login Successfully',
-                showConfirmButton: false,
-                timer: 1500
+            .then(result => {
+                const loggedUser = result.user;
+                const user = { name: loggedUser.displayName, email: loggedUser.email}
+                fetch('http://localhost:5000/users', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(res => res.json())
+                    .then(()=>{
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'SingUp Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate(from,{replace:true})
+                    })
             })
-            navigate(from,{replace:true})
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+
+            .catch(error => {
+                console.log(error);
+            })
     }
     return (
         <div>
