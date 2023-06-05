@@ -28,7 +28,7 @@ const Dashbord = () => {
                         <li> <NavLink to='/dashbord/userhome'> <FaHome></FaHome> Admin Home </NavLink> </li>
                         <li> <NavLink to='/dashbord/reservations'> <FaBook></FaBook> Manage Bookings </NavLink> </li>
                         <li> <NavLink to='/dashbord/additem'> <FaUncharted></FaUncharted> Add Item </NavLink> </li>
-                        <li> <NavLink to='/dashbord/history'> <FaArrowRight></FaArrowRight> Manage Items </NavLink> </li>
+                        <li> <NavLink to='/dashbord/manageitems'> <FaArrowRight></FaArrowRight> Manage Items </NavLink> </li>
                         <li> <NavLink to='/dashbord/allusers'> <FaUsers></FaUsers> All Users </NavLink> </li>
                         
                     </> :
