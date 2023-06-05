@@ -81,7 +81,7 @@ const Login = () => {
                                 <input onBlur={handleVaildate} type="captcha" name='captcha' required placeholder="Type Captcha" className="input input-bordered mb-5" />
                                 
                             </div>
-                            <input disabled={diasble} type="submit" value="login" className='btn btn-primary w-full' />
+                            <input disabled={false} type="submit" value="login" className='btn btn-primary w-full' />
                         </form>
                         <SocialLogin></SocialLogin>
                     </div>
