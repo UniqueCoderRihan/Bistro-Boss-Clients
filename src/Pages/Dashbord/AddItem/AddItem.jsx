@@ -1,10 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 const image_hosting_Key = import.meta.env.VITE_image_hosting_token;
 const AddItem = () => {
     // console.log(image_hosting_Key);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [axiosSecure] = useAxiosSecure()
+    const { register, handleSubmit,reset } = useForm();
     const image_Hosting_URL = `https://api.imgbb.com/1/upload?key=${image_hosting_Key}`
     const onSubmit = data => {
         console.log(data);
@@ -21,11 +24,25 @@ const AddItem = () => {
                 const ImageURL =imageResponse.data.display_url;
                 const {name,category,price,recipe} = data;
                 const newItem = {name,category,price:parseFloat(price),recipe,image:ImageURL}
-                console.log(newItem);
+                // console.log(newItem);
+                axiosSecure.post('/menu',newItem)
+                .then(data=>{
+                    console.log('Aftern Adding Item: ',data.data);
+                    if(data.data.insertedId){
+                        reset();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Awwww!! New Item Added!',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                    }
+                })
             }
         })
     };
-    console.log(errors);
+    // console.log(errors);
     return (
         <div className='w-full px-10'>
             <SectionTitle heading='Add an Item' subHeading='What is new?'></SectionTitle>
