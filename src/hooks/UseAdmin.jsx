@@ -16,6 +16,6 @@ const UseAdmin =()=>{
         }
     })
 
-    return [isAdmin,isAdminLoading]
+    return [isAdmin,isAdminLoading];
 }
 export default UseAdmin;
