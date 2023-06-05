@@ -5,7 +5,7 @@ const image_hosting_Key = import.meta.env.VITE_image_hosting_token;
 const AddItem = () => {
     // console.log(image_hosting_Key);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const image_Hosting_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_Key}`
+    const image_Hosting_URL = `https://api.imgbb.com/1/upload?key=${image_hosting_Key}`
     const onSubmit = data => {
         console.log(data);
         const formData = new FormData();
@@ -17,6 +17,12 @@ const AddItem = () => {
         .then(res=>res.json())
         .then(imageResponse=>{
             console.log(imageResponse);
+            if(imageResponse.success){
+                const ImageURL =imageResponse.data.display_url;
+                const {name,category,price,recipe} = data;
+                const newItem = {name,category,price:parseFloat(price),recipe,image:ImageURL}
+                console.log(newItem);
+            }
         })
     };
     console.log(errors);
