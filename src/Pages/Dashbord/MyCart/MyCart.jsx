@@ -1,6 +1,7 @@
 import React from 'react';
 import UseCart from '../../../hooks/UseCart';
 import Cart from './Cart';
+import { Link } from 'react-router-dom';
 
 const MyCart = () => {
     const [cart] = UseCart();
@@ -12,10 +13,12 @@ const MyCart = () => {
             <div className='uppercase flex space-x-9 font-semibold'>
                 <h2 className='text-3xl'>Total Items: {cart.length}</h2>
                 <h2 className='text-3xl'>Total Price: {totalPrice}</h2>
+                <Link to='/dashbord/payment'>
                 <button className='btn btn-warning btn-sm'>PAY</button>
+                </Link>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto w-full">
                 <table className="table">
                     {/* head */}
                     <thead>
