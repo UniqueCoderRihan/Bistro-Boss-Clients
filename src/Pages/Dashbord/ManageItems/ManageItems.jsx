@@ -2,8 +2,46 @@ import React from 'react';
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle'
 import UseMenu from '../../../hooks/UseMenu';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 const ManageItems = () => {
-    const [menu] = UseMenu();
+    const [axiosSecure] = useAxiosSecure();
+    const [menu, loading,refetch] = UseMenu();
+    const handleRemove = id => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(id);
+                axiosSecure.delete(`/menu/${id}`)
+                    .then(res => {
+                        console.log('Deleted res', res.data);
+                        if (res.data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                        else {
+                            Swal.fire(
+                                'Opps',
+                                'Try Again.',
+                                'error'
+                            )
+                        }
+
+                    })
+            }
+        })
+    }
     return (
         <div className='w-full'>
             <SectionTitle heading='Manage Items' subHeading='Hurry Up'></SectionTitle>
@@ -20,15 +58,15 @@ const ManageItems = () => {
                                 <th>Item Image</th>
                                 <th>Name</th>
                                 <th>Price</th>
-                                <th>Action</th>
-                                <th>Action</th>
+                                <th>Update</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                menu.map((row,index) => <tr>
+                                menu.map((row, index) => <tr key={row._id}>
                                     <th>
-                                        {index+1}
+                                        {index + 1}
                                     </th>
                                     <td>
                                         <div className="flex items-center space-x-3">
@@ -49,7 +87,7 @@ const ManageItems = () => {
                                         </button>
                                     </th>
                                     <th>
-                                        <button className="btn btn-outline bg-red-400">
+                                        <button onClick={() => handleRemove(row._id)} className="btn btn-outline bg-red-400">
                                             <FaTrashAlt className='text-2xl'></FaTrashAlt>
                                         </button>
                                     </th>
